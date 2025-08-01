@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Room
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -13,15 +14,25 @@ from .models import Room
 
 
 def home(request):
-    rooms = Room.objects.all()
+    rooms = Room.objects.all()  # querying from the database for multiple objects
     context ={'rooms': rooms}
     return render( request, 'base/home.html', context)
 
+
+
+
 def room(request, pk):
-    rooms = Room.objects.all()
-    room = None
-    for i in rooms:
-        if i['id'] == int(pk):
-            room = i
+    # room = get_object_or_404(Room, id=pk)  # querying from the database for single object
+    room = Room.objects.get(id=pk)
     context = {'room': room}
-    return render( request, 'base/room.html', context)
+    return render(request, 'base/room.html', context)
+
+
+# def room(request, pk):
+#     rooms = Room.objects.all()
+#     room = None
+#     for i in rooms:
+#         if i.ID == int(pk):
+#             room = i
+#     context = {'room': room}
+#     return render( request, 'base/room.html', context)
