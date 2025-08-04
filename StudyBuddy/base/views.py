@@ -5,18 +5,10 @@ from .forms import RoomForm
 
 # Create your views here.
 
-# rooms = [
-#     {'id':1, 'name':'Lets learn python'}, 
-#     {'id':2, 'name':'Design with me'}, 
-#     {'id':3, 'name':'Backend developers'}, 
-# ]
-
-  
-
-
 def home(request):
     # rooms = Room.objects.all()  # querying from the database for multiple objects
-    rooms = Room.objects.filter()  # filter from the database for selected objects
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    rooms = Room.objects.filter(topic__name__icontains=q)  # filter from the database for selected objects
     topics = Topic.objects.all()
     context ={'rooms': rooms, 'topics':topics}
     return render( request, 'base/home.html', context)
@@ -29,16 +21,6 @@ def room(request, pk):
     room = Room.objects.get(id=pk)
     context = {'room': room}
     return render(request, 'base/room.html', context)
-
-
-# def room(request, pk):
-#     rooms = Room.objects.all()
-#     room = None
-#     for i in rooms:
-#         if i.ID == int(pk):
-#             room = i
-#     context = {'room': room}
-#     return render( request, 'base/room.html', context)
 
 
 def createRoom(request):
