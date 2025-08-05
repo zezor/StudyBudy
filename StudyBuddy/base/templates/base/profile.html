@@ -10,8 +10,13 @@
 
 </style>
 
-<h1> Welcome to your profile</h1>
-<h1> @{{profile.host.username}}</h1>
+<h1> Welcome to {{user.username}} profile</h1>
+
+{% if user.profile.image %}
+    <img src="{{ user.profile.image.url }}" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%;">
+{% else %}
+    <p>No profile image available.</p>
+{% endif %}
 
 <div class = "profile-container">
 
