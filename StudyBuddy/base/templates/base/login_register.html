@@ -1,25 +1,102 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<div>
-    <form method="POST" action="{% url 'login' %}">>
+<style>
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .login-container form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .login-container input[type="submit"] {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .login-container input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .login-container p {
+        margin-top: 10px;
+    }
+    .register-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .register-container form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .register-container input[type="text"],
+    .register-container input[type="password"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
+
+
+{% if page == 'login' %}
+<div class="login-container">
+    <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
 
+        <label>Username:</label>
+        <input type="text" name="username" placeholder="Enter Username" required />
 
-        <label> Username: </label>
-        <input type="text" name="username" placeholder="Enter Username"/>
+        <label>Password:</label>
+        <input type="password" name="password" placeholder="Enter Password" required />
 
-          <label> Password: </label>
-        <input type="password" name="password" placeholder="Enter Password"/>
-
-        <input type="submit" value="Login"/>
+        <input type="submit" value="Login" />
     </form>
+
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    {# <p>Forgot your password? <a href="{% url 'reset_password' %}">Reset Password</a></p> #}
 </div>
 
+{% else %}
+<div class="register-container">
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
 
+        <!-- Add register fields here if needed -->
+        <label>Username:</label>
+        <input type="text" name="username" placeholder="Choose Username" required />
 
+        <label>Password:</label>
+        <input type="password" name="password1" placeholder="Enter Password" required />
 
+        <label>Confirm Password:</label>
+        <input type="password" name="password2" placeholder="Confirm Password" required />
 
+        <input type="submit" value="Register" />
+    </form>
 
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+{% endif %}
 
 {% endblock content %}
