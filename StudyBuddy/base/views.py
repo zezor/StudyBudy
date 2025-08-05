@@ -6,6 +6,8 @@ from django.db.models import Q
 from .models import Room, Topic
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .forms import RoomForm
 
@@ -19,7 +21,7 @@ def loginPage(request):
         return redirect('home')
     
     if request.method == "POST":
-        username = request.POST.get('username')
+        username = request.POST.get('username').strip().lower()  # Normalize username to lowercase
         password = request.POST.get('password')
         
         try:
@@ -40,32 +42,49 @@ def loginPage(request):
 ## Login, Register, Logout Views
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('login')
 
 ## Login, Register, Logout Views
 def registerPage(request):
     page = 'register'
-    
-    if request.user.is_authenticated:
-        return redirect('home')
-    
+    form = UserCreationForm()
     if request.method == "POST":
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        password2 = request.POST.get('password2')
-        
-        if password != password2:
-            messages.error(request, 'Passwords do not match')
-        else:
-            user = User.objects.create_user(username=username, email=email, password=password)
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()  # Normalize username to lowercase
             user.save()
-            login(request, user)
+            login(request, user) # Automatically log in the user after registration
+            messages.success(request, 'Registration successful')
             return redirect('home')
-    
-    context = {'page': page}
-    return render(request, 'base/login_register.html', context)
+        else:
+            messages.error(request, 'An error occurred during registration')
 
+    return render(request, 'base/login_register.html', {'form': form})
+    
+
+    # Uncomment the following lines if you want to implement registration functionality
+    # if request.user.is_authenticated:
+    #     return redirect('home')
+    
+    # if request.method == "POST":
+    #     username = request.POST.get('username')
+    #     email = request.POST.get('email')
+    #     password = request.POST.get('password')
+    #     password2 = request.POST.get('password2')
+        
+    #     if password != password2:
+    #         messages.error(request, 'Passwords do not match')
+    #     else:
+    #         user = User.objects.create_user(username=username, email=email, password=password)
+    #         user.save()
+    #         login(request, user)
+    #         return redirect('home')
+    
+    # context = {'page': page}
+    # return render(request, 'base/login_register.html', context)
+
+ 
 
 
 
@@ -89,7 +108,9 @@ def home(request):
 def room(request, pk):
     # room = get_object_or_404(Room, id=pk)  # querying from the database for single object
     room = Room.objects.get(id=pk)
-    context = {'room': room}
+    room_messages= room.message_set.all().order_by('-created')  # Get all messages related to the room and order them by creation date
+    participants = room.participants.all()
+    context = {'room': room, 'room_messages': room_messages, 'participants': participants}
     return render(request, 'base/room.html', context)
 
 @login_required(login_url='login')
