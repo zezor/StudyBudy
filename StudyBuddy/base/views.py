@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from .forms import RoomForm
 
 # Create your views here.
-
+## Login, Register, Logout Views
 def loginPage(request):
     
     page = 'login'
@@ -34,15 +34,15 @@ def loginPage(request):
         else:
             messages.error(request, 'Username and Password does not exit please try again')
     
-    context = {' page': 'page'}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
-
+## Login, Register, Logout Views
 def logoutUser(request):
     logout(request)
     return redirect('home')
 
-
+## Login, Register, Logout Views
 def registerPage(request):
     page = 'register'
     
@@ -63,8 +63,10 @@ def registerPage(request):
             login(request, user)
             return redirect('home')
     
-    context = {'page': 'page'}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
+
+
 
 
 def home(request):
