@@ -1,64 +1,27 @@
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Study Buddy</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1em;
-    }
-    nav {
-      margin: 10px 0;
-      text-align: center;
-    }
-    nav a {
-      color: #333;
-      margin: 0 15px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1em;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% comment %} <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"> {% endcomment %}
+  {% comment %} <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/icomoon.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/line-icons.css' %} {% endcomment %}
+
+  <link rel="stylesheet" type="text/css" media="screen" href="{% static 'styles/main.css' %}">
+  
 </head>
 <body>
-   <!-- <header>
-    <h1>Welcome to Study Buddy</h1>
-  </header> -->
-  <!-- <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <main>
-    <h2>Main Content</h2>
-    <p>This is the main content area. You can add your text, images, or other elements here.</p>
-  </main> -->
+ 
 
 {% include 'navbar.html' %} 
 
@@ -71,20 +34,10 @@
 </ul>
 {% endif %}
 
-{% block content %}
-<!-- <div class="container">
-    <h1>Welcome to StudyBuddy</h1>
-    <p>This is the main page of your Django app.</p>
+{% comment %} <img src="{% static 'images/glory.jpg'%}"/> {% endcomment %}
 
-    <div class="features">
-        <h2>Features</h2>
-        <ul>
-            <li>Manage your study sessions</li>
-            <li>Track progress</li>
-            <li>Collaborate with friends</li>
-        </ul>
-    </div>
-</div> -->
+{% block content %}
+
 {% endblock %}
 
 
