@@ -87,17 +87,17 @@
 {% else%}
 <div class="register-container">
     <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
+        {% comment %} {% csrf_token %}
+        {{ form.as_p }} {% endcomment %}
         <!-- Add register fields here if needed -->
-        <!-- <label>Username:</label>
+        <label>Username:</label>
         <input type="text" name="username" placeholder="Choose Username" required />
 
         <label>Password:</label>
         <input type="password" name="password1" placeholder="Enter Password" required />
 
         <label>Confirm Password:</label>
-        <input type="password" name="password2" placeholder="Confirm Password" required /> -->
+        <input type="password" name="password2" placeholder="Confirm Password" required /> 
 
         <input type="submit" value="Register" />
     </form>

@@ -42,7 +42,7 @@ def loginPage(request):
 ## Login, Register, Logout Views
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 ## Login, Register, Logout Views
 def registerPage(request):
@@ -98,6 +98,7 @@ def home(request):
                                 )# filter from the database for selected objects
     topics = Topic.objects.all()
     room_count = rooms.count()
+    # description = room.description
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q) | Q(room__name__icontains=q) |
                                            Q(room__description__icontains=q)).order_by('-created')[:5]  # Get the latest 5 messages related to the search query
 
