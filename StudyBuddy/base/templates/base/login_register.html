@@ -1,111 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page == 'login' %}Login{% else %}Register{% endif %}</title>
-   
-</head>
-<body>
+{% extends "main.html" %}
 
-<style>
-    .login-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-    }
-
-    .login-container form {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .login-container input[type="text"],
-    .login-container input[type="password"] {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .login-container input[type="submit"] {
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .login-container input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-
-    .login-container p {
-        margin-top: 10px;
-    }
-    .register-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-    }
-    .register-container form {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .register-container input[type="text"],
-    .register-container input[type="password"] {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-</style>
+{% block content%}
+    <main class="auth layout">
 
 
-{% if page == 'login' %}
-<div class="login-container">
-    <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
+      {% if page == 'login' %}
+     <div class="container">
+        <div class="layout__box">
+          <div class="layout__boxHeader">
+            <div class="layout__boxTitle">
+              <h3>Login</h3>
+            </div>
+          </div>
+          <div class="layout__body">
+            <h2 class="auth__tagline">Find your study partner</h2>
 
-        <label>Username:</label>
-        <input type="text" name="username" placeholder="Enter Username" required />
+            <form class="form" action="" method="POST">
+              {% csrf_token %}
+              <div class="form__group form__group">
+                <label for="room_name">Username:</label>
+                <input id="username" name="username" type="text" placeholder="e.g. dennis_ivy" />
+              </div>
+              <div class="form__group">
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                />
+              </div>
 
-        <label>Password:</label>
-        <input type="password" name="password" placeholder="Enter Password" required />
+              <button class="btn btn--main" type="submit">
+                <svg
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                >
+                  <title>lock</title>
+                  <path
+                    d="M27 12h-1v-2c0-5.514-4.486-10-10-10s-10 4.486-10 10v2h-1c-0.553 0-1 0.447-1 1v18c0 0.553 0.447 1 1 1h22c0.553 0 1-0.447 1-1v-18c0-0.553-0.447-1-1-1zM8 10c0-4.411 3.589-8 8-8s8 3.589 8 8v2h-16v-2zM26 30h-20v-16h20v16z"
+                  ></path>
+                  <path
+                    d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z"
+                  ></path>
+                </svg>
 
-        <input type="submit" value="Login" />
-    </form>
+                Login
+              </button>
+            </form>
 
-    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-  
-</div>
+            <div class="auth__action">
+              <p>Haven't signed up yet?</p>
+              <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
 
-{% else%}
-<div class="register-container">
-    <form method="POST" action="{% url 'register' %}">
-        {% comment %} {% csrf_token %}
-        {{ form.as_p }} {% endcomment %}
-        <!-- Add register fields here if needed -->
-        <label>Username:</label>
-        <input type="text" name="username" placeholder="Choose Username" required />
+       <div class="container">
+        <div class="layout__box">
+          <div class="layout__boxHeader">
+            <div class="layout__boxTitle">
+              <h3>Register</h3>
+            </div>
+          </div>
+          <div class="layout__body">
+            <h2 class="auth__tagline">Find your study partner</h2>
 
-        <label>Password:</label>
-        <input type="password" name="password1" placeholder="Enter Password" required />
+            <form class="form" action="" method="POST">
+              
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="form__group form__group">
+                <label for="room_name">{{field.label}}:</label>
+            {{field}}
+          </div>
+              {% endfor %}
+              <button class="btn btn--main" type="submit">
+                <svg
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                >
+                  <title>lock</title>
+                  <path
+                    d="M27 12h-1v-2c0-5.514-4.486-10-10-10s-10 4.486-10 10v2h-1c-0.553 0-1 0.447-1 1v18c0 0.553 0.447 1 1 1h22c0.553 0 1-0.447 1-1v-18c0-0.553-0.447-1-1-1zM8 10c0-4.411 3.589-8 8-8s8 3.589 8 8v2h-16v-2zM26 30h-20v-16h20v16z"
+                  ></path>
+                  <path
+                    d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z"
+                  ></path>
+                </svg>
 
-        <label>Confirm Password:</label>
-        <input type="password" name="password2" placeholder="Confirm Password" required /> 
+                Register
+              </button>
+            </form>
 
-        <input type="submit" value="Register" />
-    </form>
+            <div class="auth__action">
+              <p>Already signed up?</p>
+              <a href="{% url 'login' %}" class="btn btn--link">Sign In</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
 
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-</div>
-{% endif %}
+        <!-- Room Start
+        <div class="room">
+            <div class="room__header">
+                <h2 class="room__title">{{ room.name }}</h2>
+                <div class="room__info">
+                    <div class="room__topic">
+                        <span>Topic: </span>
+                        <a href="{% url 'home'%}?q={{room.topic.name}}">{{ room.topic.name }}</a>
+                    </div>
+                    <div class="room__hosted">
+                        <span>Hosted by: </span>
+                            <div class="avatar avatar--small">
+                                <img src="https://randomuser.me/api/portraits/men/{{ room.host.id }}.jpg" alt="{{ room.host.username }}" />
+                            </div>
+                            <span>{{ room.host.username }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
-
-</body>
-</html>
+    </main>
+ {% endblock%}
