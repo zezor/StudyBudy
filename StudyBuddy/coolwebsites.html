@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Cool Rooms</title>
+</head>
+<body>
+<h1>Welcome to Cool Rooms</h1>
+<p>Your one-stop destination for the coolest room designs and ideas.</p>
+
+<div id="rooms-container">
+<ul>
+<li><a href="#">Modern Rooms</a></li>
+
+</div>
+
+</body>
+
+<script>
+  // JavaScript code can be added here
+
+    let getRooms = async () => {
+
+            let response = await fetch('http://127.0.0.1:8000/api/rooms/');
+            let rooms = await response.json();
+            console.log('RESPONSE:', rooms);
+            
+            
+            
+    };
+
+    getRooms();
+</script>
+
+</html>
